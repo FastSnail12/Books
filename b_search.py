@@ -1,4 +1,15 @@
-def binary_search(arr, item):
+from typing import Optional
+
+from func_test import check_memory, timer
+
+
+@check_memory
+@timer
+def binary_search(arr: list, item) -> Optional[int]:
+    """
+    Бинарный поиск. O(lig(n))
+    """
+
     low = 0
     high = len(arr) - 1
 
@@ -13,3 +24,7 @@ def binary_search(arr, item):
         else:
             low = mid + 1
     return None
+
+
+if __name__ == "__main__":
+    z = binary_search([1, 2, 3, 4, 5, 6, 7, 8, 9], 5)
