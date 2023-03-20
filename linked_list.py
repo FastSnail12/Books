@@ -60,3 +60,8 @@ class LinkedList:
 
 if __name__ == "__main__":
     myList = LinkedList()
+    myList.add_node(1)
+    myList.add_node(2)
+    myList.add_node(3)
+    myList.add_node(4)
+    myList.print_ll()
