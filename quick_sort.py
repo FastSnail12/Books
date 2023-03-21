@@ -14,7 +14,7 @@ def quick_sort(arr: list) -> list:
         return arr
     else:
         number = randint(0, len(arr) - 1)
-        support_element = arr[number]
+        support_element = arr.pop(number)
 
         before_arr = [i for i in arr[1:] if i <= support_element]
         after_arr = [i for i in arr[1:] if i > support_element]
