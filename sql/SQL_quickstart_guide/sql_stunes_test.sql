@@ -275,3 +275,99 @@ WHERE
   DATE(InvoiceDate) = '2009-01-03'
 ORDER BY
   Total DESC;
+
+/*
+ * CREATED BY: Snail
+ * DESCRIPTION: В приведенном ниже запросе оператор
+ * AND используется вместе с функцией DATE() для
+ * поиска всех счетов, оформленных после 02.01.2010,
+ * на общую сумму менее $3,00. Результат этого
+ * запроса должен удовлетворять одновременно обоим
+ * условиям: (DATE (InvoiceDate)>'2010-01-02' AND Total<3).
+*/
+
+SELECT
+  InvoiceDate,
+  BillingAddress,
+  BillingCity,
+  Total
+FROM 
+  invoices
+WHERE
+  DATE(InvoiceDate) > '2010-01-02' AND Total < 3
+ORDER BY
+  Total;
+
+/*
+ * CREATED BY: Snail
+ * DESCRIPTION: В следующем запросе выполняется поиск
+ * всех счетов, выставленных в городах, названия которых
+ * начинаются с буквы P или с буквы D.
+*/
+
+SELECT
+  InvoiceDate,
+  BillingAddress,
+  BillingCity,
+  Total
+FROM 
+  invoices
+WHERE
+  BillingCity LIKE 'p%' OR BillingCity LIKE 'd%'
+ORDER BY
+  Total;
+
+/*
+ * CREATED BY: Snail
+ * DESCRIPTION: Допустим, нам необходимо получить все
+ * счета на сумму свыше $1,98 из любых городов, названия
+ * которых начинаются с буквы P или D.
+*/
+
+SELECT
+  InvoiceDate,
+  BillingAddress,
+  BillingCity,
+  Total
+FROM 
+  invoices
+WHERE
+  Total > 1.98 AND (BillingCity LIKE 'p%' OR BillingCity LIKE 'd%')
+ORDER BY
+  Total;
+
+/*
+ * CREATED BY: Snail
+ * DESCRIPTION: Цель отдела продаж компании sTunes — чтобы
+ * как можно больше клиентов потратили от $7 до $15 на
+ * покупку музыкальной продукции в онлайн-магазине. Для
+ * этой цели были созданы следующие категории покупок:
+ * Baseline Purchase (базовая покупка), Low Purchase
+ * (незначительная покупка), Target Purchase (целевая покупка)
+ * и Top Performer (значительная покупка). Поскольку
+ * стоимость песни составляет от $0,99 до $1,99, любой счет
+ * из этого диапазона считается Baseline Purchase (базовой покупкой).
+ * Сумма счетов от $2,00 до $6,99 относится к Low Purchase
+ * (незначительной покупке). Поскольку основная цель продаж
+ * составляет от $7 до $15, любые покупки в этой категории — это
+ * Target Purchase (целевая покупка), а выше $15— Top Performer
+ * (значительная покупка). Отдел продаж sTunes хочет узнать,
+ * можно ли получить из базы данных какую-либо информацию о
+ * продажах для всех перечисленных категорий.
+*/
+
+SELECT
+  InvoiceDate,
+  BillingAddress,
+  BillingCity,
+  Total,
+  CASE
+  WHEN Total < 2.00 THEN 'Baseline Purchase'
+  WHEN Total BETWEEN 2.00 AND 6.99 THEN 'Low Purchase'
+  WHEN Total BETWEEN 7.00 AND 15.00 THEN 'Target Purchase'
+  ELSE 'Top Performers'
+  END AS PurchaseType
+FROM 
+  invoices
+ORDER BY
+  BillingCity;
