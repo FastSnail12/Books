@@ -371,3 +371,60 @@ FROM
   invoices
 ORDER BY
   BillingCity;
+
+/*
+ * CREATED BY: Snail
+ * DESCRIPTION: Допустим, отделу маркетинга компании sTunes
+ * необходимо более детально проанализировать клиентскую базу.
+ * В этом случае он запросит полный список имен клиентов
+ * (имя и фамилию) со всеми счетами, выставленными каждому клиенту.
+*/
+
+SELECT
+  c.LastName,
+  c.FirstName,
+  i.InvoiceId,
+  i.CustomerId,
+  i.InvoiceDate,
+  i.Total
+FROM 
+  invoices AS i
+INNER JOIN  --LEFT OUTER/LEFT
+            --RIGHT OUTER/RIGHT
+  customers AS c
+ON 
+  i.CustomerId = c.CustomerId
+ORDER BY
+  c.LastName;
+
+/*
+ * CREATED BY: Snail
+ * DESCRIPTION: Допустим, отдел обслуживания клиентов sTunes
+ * хочет поощрить сотрудников, которым удалось совершить десять
+ * самых лучших продаж. Служба поддержки клиентов хочет создать
+ * для каждого сотрудника табличку со списком их лучших клиентов.
+*/
+
+SELECT
+  e.FirstName,
+  e.LastName,
+  e.EmployeeId,
+  c.FirstName,
+  c.LastName,
+  c.SupportRepId,
+  i.CustomerId,
+  i.Total
+FROM
+  invoices AS i
+INNER JOIN
+  customers AS c
+ON
+  i.CustomerId = c.CustomerId
+INNER JOIN
+  employees AS e
+ON
+  c.SupportRepId = e.EmployeeId
+ORDER BY
+  i.Total DESC
+LIMIT 10;
+
