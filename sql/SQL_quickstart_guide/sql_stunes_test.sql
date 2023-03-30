@@ -428,3 +428,71 @@ ORDER BY
   i.Total DESC
 LIMIT 10;
 
+/*
+ * CREATED BY: Snail
+ * DESCRIPTION: Руководство sTunes просит создать перечень всех
+ * исполнителей, которые не имеют альбомов.
+*/
+
+SELECT
+  ar.ArtistId AS [ArtistId From Artists Table],
+  al.ArtistId AS [ArtistId From Albums Table],
+  ar.Name AS [Artist Name],
+  al.Title AS [Album Title]
+FROM
+  artists AS ar
+LEFT OUTER JOIN
+  albums AS al
+ON
+  ar.ArtistId = al. ArtistId
+WHERE
+  al.ArtistId IS NULL;
+
+/*
+ * CREATED BY: Snail
+ * DESCRIPTION: Преобразование правого соединения в левое.
+*/
+
+/*
+ * SELECT
+ *  t.TrackId,
+ *  t.Composer,
+ *  t.Name,
+ *  al.AlbumId,
+ *  al.Title
+ * FROM
+ *  albums AS al
+ * RIGHT OUTER JOIN
+ *  tracks AS t
+ * ON
+ *  t.AlbumId = al.AlbumId;
+*/
+
+SELECT
+  t.TrackId,
+  t.Composer,
+  t.Name,
+  al.AlbumId,
+  al.Title
+FROM
+  tracks AS t
+LEFT OUTER JOIN
+  albums AS al
+ON
+  t.AlbumId = al.AlbumId;
+
+/*
+ * CREATED BY: Snail
+ * DESCRIPTION: Вычисления (например, подсчет количества
+ * полученных записей) можно выполнять, добавляя функции
+ * к запросам. Используя функцию COUNT(), можно произвести
+ * подсчет LastName и использовать псевдоним NameCount для
+ * возврата значения.
+*/
+
+SELECT
+  COUNT(LastName) AS [NameCount]
+FROM
+  customers
+WHERE
+  LastName LIKE 'B%';
