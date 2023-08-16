@@ -496,3 +496,15 @@ FROM
   customers
 WHERE
   LastName LIKE 'B%';
+
+/*
+ * CREATED BY: Snail
+ * DESCRIPTION: 
+*/
+
+SELECT
+  COUNT(LastName) AS [NameCount]
+FROM
+  customers
+WHERE
+  LastName LIKE 'B%';
